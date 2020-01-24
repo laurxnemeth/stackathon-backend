@@ -18,9 +18,15 @@
   },
   "homepage": "https://github.com/laurxnemeth/stackathon#readme",
   "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
     "koa-morgan": "^1.0.1",
-    "koa-router": "^8.0.6"
+    "koa-router": "^8.0.6",
+    "pg": "^7.17.1",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
