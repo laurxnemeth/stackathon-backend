@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/laurxnemeth/stackathon#readme",
   "dependencies": {
-    "koa": "^2.11.0"
+    "koa": "^2.11.0",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^8.0.6"
   },
   "devDependencies": {
     "nodemon": "^2.0.2"
