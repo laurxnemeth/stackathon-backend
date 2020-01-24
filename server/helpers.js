@@ -14,4 +14,6 @@ const excerptMaker = (text, arrOfExcerpts = []) => {
     console.log(arrOfExcerpts);
 }
 
+
+
 module.exports = {excerptMaker}
