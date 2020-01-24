@@ -1,0 +1,26 @@
+{
+  "name": "stackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurxnemeth/stackathon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurxnemeth/stackathon/issues"
+  },
+  "homepage": "https://github.com/laurxnemeth/stackathon#readme",
+  "dependencies": {
+    "koa": "^2.11.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}
