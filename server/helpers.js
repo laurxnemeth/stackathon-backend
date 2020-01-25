@@ -7,8 +7,14 @@ const getStopWords = () => {
 }
 
 const cleanStopWords = (excerpt, stopWords) => {
-    const currentWord = ""
-    
+    const excerptArr = excerpt.split(" ")
+    for (let i = 0; i < excerptArr.length; i++){
+        if (stopWords.hasOwnProperty(excerptArr[i].toLowerCase())){
+            excerptArr.splice(i, 1);
+            i = i - 1
+        }
+    }
+    return excerptArr.join(" ");
 }
 
 const excerptMaker = (text, arrOfExcerpts = []) => {
@@ -27,4 +33,4 @@ const excerptMaker = (text, arrOfExcerpts = []) => {
     return arrOfExcerpts
 }
 
-module.exports =  {excerptMaker, getStopWords};
+module.exports =  {excerptMaker, getStopWords, cleanStopWords};
