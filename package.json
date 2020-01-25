@@ -1,0 +1,38 @@
+{
+  "name": "stackathon",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx jest",
+    "start": "nodemon server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/laurxnemeth/stackathon.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/laurxnemeth/stackathon/issues"
+  },
+  "homepage": "https://github.com/laurxnemeth/stackathon#readme",
+  "dependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
+    "koa": "^2.11.0",
+    "koa-body": "^4.1.1",
+    "koa-morgan": "^1.0.1",
+    "koa-router": "^8.0.6",
+    "mocha": "^7.0.0",
+    "pg": "^7.17.1",
+    "request": "^2.88.0",
+    "sequelize": "^5.21.3",
+    "sequelize-cli": "^5.5.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "supertest": "^4.0.2"
+  }
+}
