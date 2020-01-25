@@ -6,7 +6,7 @@ const seed = async () => {
 }
 
 seed().catch((err) => {
-	db.close();
+	db.close();q
 	console.log(`
 
     Error seeding:

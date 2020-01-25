@@ -1,7 +1,10 @@
-// const fs = require('fs');
-// const words = fs.readFileSync('../public/stopWords.txt').toString('utf-8');
-// const textByLine = words.split('\n');
-
+const getStopWords = () => {
+    const fs = require('fs');
+    const words = fs.readFileSync('public/stopWords.txt').toString('utf-8');
+    let stopWords = {};
+    words.split('\n').forEach(i => stopWords[i] = true ); 
+    return stopWords
+}
 
 const excerptMaker = (text, arrOfExcerpts = []) => {
     let currentExcerpt = []
@@ -20,4 +23,4 @@ const excerptMaker = (text, arrOfExcerpts = []) => {
     return arrOfExcerpts
 }
 
-module.exports =  excerptMaker ;
+module.exports =  {excerptMaker, getStopWords};
