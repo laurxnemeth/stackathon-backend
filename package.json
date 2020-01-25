@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "npx jest",
+    "seed": "node seed.js",
     "start": "nodemon server/index.js"
   },
   "repository": {
