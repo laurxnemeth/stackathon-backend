@@ -1,3 +1,4 @@
+//stopWords.txt gets turned into an object -- done
 const getStopWords = () => {
     const fs = require('fs');
     const words = fs.readFileSync('public/stopWords.txt').toString('utf-8');
@@ -6,6 +7,7 @@ const getStopWords = () => {
     return stopWords
 }
 
+//takes out stopWords from excerpt -- done
 const cleanStopWords = (excerpt, stopWords) => {
     const excerptArr = excerpt.split(" ")
     for (let i = 0; i < excerptArr.length; i++){
@@ -17,20 +19,26 @@ const cleanStopWords = (excerpt, stopWords) => {
     return excerptArr.join(" ");
 }
 
-const excerptMaker = (text, arrOfExcerpts = []) => {
-    let currentExcerpt = []
+//gets a long text and turns it into an excerpt -- done
+const excerptMaker = (text) => {
+    let currentExcerpt = [];
+    let arrOfExcerpts = []; 
+    let currentWord = "";
     for(let i = 0; i < text.length; i++){
-        let currentWord = ""
-        if(currentExcerpt.length > 45 && currentExcerpt.length < 70 && text[i] === "." || text[i - 1] === "." && text[i] === "\""){
-            console.log(currentWord)
-            arrOfExcerpts.push(currentExcerpt.join(" "))
-        } else if(currentExcerpt.length <= 45 && text[i] !== " ") {
-            currentWord += text[i]
+        if(currentExcerpt.length > 40 && currentExcerpt.length < 60 && (text[i] === "." || text[i] === ",")){
+            console.log("if", currentExcerpt, "text[i]", text[i], "current", currentWord)
+            currentExcerpt.push(currentWord);
+            currentWord = ""
+            arrOfExcerpts.push(currentExcerpt.join(" "));
+            currentExcerpt = []
+        } else if(currentExcerpt.length < 60 && text[i] !== " " && text[i] !== "\"") {
+            currentWord += text[i];
         } else if (text[i] === " "){
-            currentExcerpt.push(currentWord)
+            currentExcerpt.push(currentWord);
+            currentWord = "";
         }
     }
-    return arrOfExcerpts
+    return arrOfExcerpts;
 }
 
 module.exports =  {excerptMaker, getStopWords, cleanStopWords};

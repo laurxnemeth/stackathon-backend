@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/laurxnemeth/stackathon#readme",
   "dependencies": {
+    "@koa/cors": "^2.2.3",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "koa": "^2.11.0",

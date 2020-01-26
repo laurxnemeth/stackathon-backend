@@ -1,4 +1,5 @@
 const Koa = require('koa');
+const cors = require('@koa/cors');
 const server = new Koa();
 const logger = require('koa-morgan');
 const Router = require('koa-router');
@@ -11,8 +12,8 @@ const example = "Christmas won\'t be Christmas without any presents,\" grumbled 
 
 router.get('/', ctx => {
     // ctx.body = getStopWords();
-    // //ctx.body = excerptMaker(textByLine)
-    ctx.body = cleanStopWords(example, getStopWords())
+    ctx.body = excerptMaker(example)
+    // ctx.body = cleanStopWords(example, getStopWords())
     // ctx.body = example
 });
 
@@ -28,6 +29,7 @@ router.post('/something', ctx => {
 
 server
     .use(logger('tiny'))
+    .use(cors())
     .use(router.routes())
     .listen(2020);
 
