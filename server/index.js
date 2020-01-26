@@ -12,9 +12,9 @@ const example = "Christmas won\'t be Christmas without any presents,\" grumbled 
 
 router.get('/', ctx => {
     // ctx.body = getStopWords();
-    // ctx.body = excerptMaker(example)
+    ctx.body = excerptMaker(getBook('public/littleWomen.txt'));
     // ctx.body = cleanStopWords(example, getStopWords())
-    // ctx.body = example
+    // // ctx.body = example
     // ctx.body = getBook("public/littleWomen.txt")
     // ctx.body = chooseExcerpt(arr)
 });

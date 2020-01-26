@@ -20,13 +20,14 @@ const excerptMaker = (text) => {
     let arrOfExcerpts = []; 
     let currentWord = "";
     for(let i = 0; i < text.length; i++){
-        if(currentExcerpt.length > 40 && currentExcerpt.length < 60 && (text[i] === "." || text[i] === ",")){
-            console.log("if", currentExcerpt, "text[i]", text[i], "current", currentWord)
+        if(currentExcerpt.length > 40 && currentExcerpt.length < 70 && (text[i] === "." || text[i] === "," || text[i] === ";")){
             currentExcerpt.push(currentWord);
             currentWord = ""
             arrOfExcerpts.push(currentExcerpt.join(" "));
             currentExcerpt = []
-        } else if(currentExcerpt.length < 60 && text[i] !== " " && text[i] !== "\"") {
+        } else if (currentExcerpt.length >= 70){
+			currentExcerpt = [];
+        } else if(currentExcerpt.length < 70 && text[i] !== " " && text[i] !== "\"" && text[i] !== "\r") {
             currentWord += text[i];
         } else if (text[i] === " "){
             currentExcerpt.push(currentWord);
