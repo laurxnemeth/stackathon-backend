@@ -44,7 +44,8 @@ const chooseExcerpt = (arrOfExcerpts) => {
 
 //takes out stopWords from excerpt
 const cleanStopWords = (excerpt, stopWords) => {
-    const excerptArr = excerpt.split(" ")
+    const onlyLetters = excerpt.replace(/[^a-zA-Z]/gi, " ");
+    const excerptArr = onlyLetters.split(" ")
     for (let i = 0; i < excerptArr.length; i++){
         if (stopWords.hasOwnProperty(excerptArr[i].toLowerCase())){
             excerptArr.splice(i, 1);
@@ -56,12 +57,10 @@ const cleanStopWords = (excerpt, stopWords) => {
 
 //choose 10-15 random words to become the blanks in the game
 const chooseWords = (cleanExcerptArr) => {
-    // const arr = cleanExcerpt.split(" ")
     const wordsChosen = []
     for(let i = 0; i < cleanExcerptArr.length * 0.4 ; i++){
         wordsChosen.push(cleanExcerptArr[Math.floor(Math.random() * cleanExcerptArr.length)]);
     }
-    wordsChosen.forEach((word) => )
     return wordsChosen;
 }
 
