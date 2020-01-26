@@ -38,8 +38,8 @@ const excerptMaker = (text) => {
 }
 
 //chooses which excerpt the user will see
-const chooseExcerpt = (arr) => {
-    return arr[Math.floor(Math.random() * arr.length)];
+const chooseExcerpt = (arrOfExcerpts) => {
+    return arrOfExcerpts[Math.floor(Math.random() * arrOfExcerpts.length)];
 }
 
 //takes out stopWords from excerpt
@@ -51,13 +51,31 @@ const cleanStopWords = (excerpt, stopWords) => {
             i = i - 1
         }
     }
-    return excerptArr.join(" ");
+    return excerptArr;
 }
+
+//choose 10-15 random words to become the blanks in the game
+const chooseWords = (cleanExcerptArr) => {
+    // const arr = cleanExcerpt.split(" ")
+    const wordsChosen = []
+    for(let i = 0; i < cleanExcerptArr.length * 0.4 ; i++){
+        wordsChosen.push(cleanExcerptArr[Math.floor(Math.random() * cleanExcerptArr.length)]);
+    }
+    wordsChosen.forEach((word) => )
+    return wordsChosen;
+}
+
+// 1. I'll need to send these words in a queue to the api
+// 2. then, when i get its value returned, need to do two things at a time
+//      a. change the value of this word in the original text to be VERB/ADJ/NOUN and its index (VERB1, VERB2, ADJ1, VERB3)
+//      b. send a request for these to be filled out.
+
 
 module.exports =  {
   excerptMaker, 
   getStopWords, 
   cleanStopWords, 
   getBook, 
-  chooseExcerpt
+  chooseExcerpt,
+  chooseWords,
 };

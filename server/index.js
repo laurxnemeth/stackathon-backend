@@ -10,7 +10,8 @@ const {
     getStopWords, 
     cleanStopWords, 
     getBook, 
-    chooseExcerpt 
+    chooseExcerpt,
+    chooseWords,
     } = require('./helpers');
 
 const router = new Router();
@@ -27,6 +28,7 @@ router.get('/', (ctx) => {
     // ctx.body = axios.get('http://spacejam.com').then((response) => {
     //     return response.config
     // })
+    ctx.body = chooseWords(cleanStopWords(example, getStopWords()));
 });
 
 router.get('/second_route', ctx => {
