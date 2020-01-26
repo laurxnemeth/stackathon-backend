@@ -45,6 +45,7 @@ const chooseExcerpt = (arrOfExcerpts) => {
 //takes out stopWords from excerpt
 const cleanStopWords = (excerpt, stopWords) => {
     const onlyLetters = excerpt.replace(/[^a-zA-Z]/gi, " ");
+
     const excerptArr = onlyLetters.split(" ")
     for (let i = 0; i < excerptArr.length; i++){
         if (stopWords.hasOwnProperty(excerptArr[i].toLowerCase())){
