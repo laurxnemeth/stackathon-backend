@@ -6,13 +6,17 @@ const logger = require('koa-morgan');
 const Router = require('koa-router');
 const bodyParser = require('koa-body')();
 const key = require('../secrets.js');
+const Excerpt = require('../db/models/excerpt')
+const Sequelize = require('sequelize');
+
 const {
 	excerptMaker,
 	getStopWords,
 	cleanStopWords,
 	getBook,
 	chooseExcerpt,
-	chooseWords
+	chooseWords,
+	buildDict
 } = require('./helpers');
 
 const router = new Router();
@@ -22,31 +26,37 @@ const example =
 
 router.get('/api/madlibs', async (ctx) => {
 	try {
-		const wordsToCheck = chooseWords(cleanStopWords(example, getStopWords()));
-
-		let gameData = {
-			//add what type of word and their quantity
-			wordType: {},
-			//substitute the words in the text for the type and their index
-			excerpt: {}
-		};
-
-		//build dictionary with words and their types
-		let wordsDict = {};
-		wordsToCheck.forEach(async (word) => {
-			let response = await axios.get(
-				`https://dictionaryapi.com/api/v3/references/collegiate/json/${word}?key=${key}`
-			);
-			wordsDict[word] = response.data[0].fl;
-			console.log('after: ', wordsDict);
-			//find way to ignore pronouns and undefineds
+		let book = await Excerpt.findAll({
+			where: {
+				bookId: 1
+			}
 		});
 
-        for(let key in wordsDict){
-            if(wordsDict[key] !== undefined || !wordsDict[key].includes("pronoun")){
+		let excerptObj = chooseExcerpt(book);
+		let excerpt = excerptObj.dataValues.paragraph
 
-            }
-        }
+		let wordsToCheck = chooseWords(cleanStopWords(example, getStopWords()));
+
+		//build dictionary with words and their types
+		//its inside the helpers 
+
+		// console.log("dictionary --->", wordsDict)
+		let dict = await buildDict(wordsToCheck);
+		console.log("dict ---->", dict);
+
+		//time to generate the actual game
+		let gameData = {
+				//add what type of word and their quantity
+				wordType: {},
+				//substitute the words in the text for the type and their index
+				excerpt: {}
+			};
+
+        // for(let key in wordsDict){
+        //     if(wordsDict[key] !== undefined || !wordsDict[key].includes("pronoun")){
+
+        //     }
+        // }
 		//{ “wordType” : {“nouns” : 2, “adverbs”: 3, “verbs”: 4},
 		//“excerpt” : “ the $NOUN1 went $ADVERB1 to the $NOUN2”}
         ctx.body = "hey"

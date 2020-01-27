@@ -1,3 +1,6 @@
+const axios = require('axios');
+const key = require('../secrets.js');
+
 //stopWords.txt gets turned into an object
 const getStopWords = () => {
     const fs = require('fs');
@@ -70,6 +73,21 @@ const chooseWords = (cleanExcerptArr) => {
 //      a. change the value of this word in the original text to be VERB/ADJ/NOUN and its index (VERB1, VERB2, ADJ1, VERB3)
 //      b. send a request for these to be filled out.
 
+const buildDict = async (arr) => {
+    try {
+        let wordsDict = {};
+        for (let i = 0; i < arr.length; i++){
+            let response = await axios.get(
+				`https://dictionaryapi.com/api/v3/references/collegiate/json/${arr[i]}?key=${key}`
+		    );
+            wordsDict[arr[i]] = response.data[0].fl
+        }
+        console.log("inside --->", wordsDict);
+    return wordsDict
+    } catch (error) {
+        console.log("oops")
+    }
+}
 
 module.exports =  {
   excerptMaker, 
@@ -78,4 +96,5 @@ module.exports =  {
   getBook, 
   chooseExcerpt,
   chooseWords,
+  buildDict,
 };
