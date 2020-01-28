@@ -6,7 +6,7 @@ const logger = require('koa-morgan');
 const Router = require('koa-router');
 const bodyParser = require('koa-body')();
 const key = require('../secrets.js');
-const Excerpt = require('../db/models/excerpt')
+const Excerpt = require('../db/models/excerpt');
 const Sequelize = require('sequelize');
 
 const {
@@ -21,46 +21,53 @@ const {
 
 const router = new Router();
 
-const example =
-	'Christmas won\'t be Christmas without any presents," grumbled Jo, lying on the rug. "It\'s so dreadful to be poor!" sighed Meg, looking down at her old dress. "I don\'t think it\'s fair for some girls to have plenty of pretty things, and other girls nothing at all," added little Amy, with an injured sniff. "We\'ve got Father and Mother, and each other," said Beth contentedly from her corner." The four young faces on which the firelight shone brightened at the cheerful words, but darkened again as Jo said sadly, "We haven\'t got Father, and shall not have him for a long time."';
-
 router.get('/api/madlibs', async (ctx) => {
 	try {
+		//receive book
 		let book = await Excerpt.findAll({
 			where: {
 				bookId: 1
 			}
 		});
 
+		//randomly choose an excerpt
 		let excerptObj = chooseExcerpt(book);
-		let excerpt = excerptObj.dataValues.paragraph
 
-		let wordsToCheck = chooseWords(cleanStopWords(example, getStopWords()));
+		//grab paragraph from excerpt object
+		let excerpt = excerptObj.dataValues.paragraph;
 
-		//build dictionary with words and their types
-		//its inside the helpers 
+		//clean excerpt of stop words
+		//and choose the words for the game
+		let wordsToCheck = chooseWords(cleanStopWords(excerpt, getStopWords()));
 
-		// console.log("dictionary --->", wordsDict)
+		//build dictionary (dict[word] = type)
 		let dict = await buildDict(wordsToCheck);
-		console.log("dict ---->", dict);
 
-		//time to generate the actual game
+		//generate the actual game
 		let gameData = {
-				//add what type of word and their quantity
-				wordType: {},
-				//substitute the words in the text for the type and their index
-				excerpt: {}
-			};
+			//add what type of word and their quantity
+			wordType: {},
+			//substitute the words in the text for the type and their index
+			excerpt: excerpt
+		};
 
-        // for(let key in wordsDict){
-        //     if(wordsDict[key] !== undefined || !wordsDict[key].includes("pronoun")){
+		//it's the game!
+		const gameExcerpt = (obj) => {
+			let str = gameData.excerpt;
+			for (let key in obj) {
+				if (obj[key] !== undefined && !obj[key].includes('pronoun')) {
+					if (gameData.wordType.hasOwnProperty(obj[key])) {
+						gameData.wordType[dict[key]]++;
+					} else {
+						gameData.wordType[dict[key]] = 1;
+					}
+					str = str.replace(key, obj[key].toUpperCase());
+				}
+			}
+			return str;
+		};
 
-        //     }
-        // }
-		//{ “wordType” : {“nouns” : 2, “adverbs”: 3, “verbs”: 4},
-		//“excerpt” : “ the $NOUN1 went $ADVERB1 to the $NOUN2”}
-        ctx.body = "hey"
-
+		ctx.body = gameExcerpt(dict);
 	} catch (error) {
 		console.log(error);
 	}

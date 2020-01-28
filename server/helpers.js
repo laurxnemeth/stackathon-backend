@@ -17,7 +17,7 @@ const getBook = (bookFile) => {
     return bookToString;
 }
 
-//receives the book string and turns it into an excerpt
+//for the database: receives the book string and turns it into an excerpt
 const excerptMaker = (text) => {
     let currentExcerpt = [];
     let arrOfExcerpts = []; 
@@ -41,11 +41,11 @@ const excerptMaker = (text) => {
 }
 
 //chooses which excerpt the user will see
-const chooseExcerpt = (arrOfExcerpts) => {
-    return arrOfExcerpts[Math.floor(Math.random() * arrOfExcerpts.length)];
+const chooseExcerpt = (arr) => {
+    return arr[Math.floor(Math.random() * arr.length)];
 }
 
-//takes out stopWords from excerpt
+//takes out stop words from excerpt
 const cleanStopWords = (excerpt, stopWords) => {
     const onlyLetters = excerpt.replace(/[^a-zA-Z]/gi, " ");
 
@@ -59,20 +59,16 @@ const cleanStopWords = (excerpt, stopWords) => {
     return excerptArr;
 }
 
-//choose 10-15 random words to become the blanks in the game
+//choose random words to become the blanks in the game
 const chooseWords = (cleanExcerptArr) => {
     const wordsChosen = []
-    for(let i = 0; i < cleanExcerptArr.length * 0.4 ; i++){
+    for(let i = 0; i < cleanExcerptArr.length * 0.6 ; i++){
         wordsChosen.push(cleanExcerptArr[Math.floor(Math.random() * cleanExcerptArr.length)]);
     }
     return wordsChosen;
 }
 
-// 1. I'll need to send these words in a queue to the api
-// 2. then, when i get its value returned, need to do two things at a time
-//      a. change the value of this word in the original text to be VERB/ADJ/NOUN and its index (VERB1, VERB2, ADJ1, VERB3)
-//      b. send a request for these to be filled out.
-
+//get the type of word from the dictionary api
 const buildDict = async (arr) => {
     try {
         let wordsDict = {};
@@ -82,7 +78,6 @@ const buildDict = async (arr) => {
 		    );
             wordsDict[arr[i]] = response.data[0].fl
         }
-        console.log("inside --->", wordsDict);
     return wordsDict
     } catch (error) {
         console.log("oops")
