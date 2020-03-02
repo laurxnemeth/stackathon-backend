@@ -8,6 +8,7 @@ const bodyParser = require('koa-body')();
 const key = require('../secrets.js');
 const Excerpt = require('../db/models/excerpt');
 const Sequelize = require('sequelize');
+const port = process.env.PORT || 2020;
 
 const {
 	excerptMaker,
@@ -83,6 +84,6 @@ server
 	.use(logger('tiny'))
 	.use(cors())
 	.use(router.routes())
-	.listen(2020);
+	.listen(port);
 
 module.exports = server;

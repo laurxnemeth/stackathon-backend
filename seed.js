@@ -17,7 +17,7 @@ excerptMaker(getBook('public/littleWomen.txt')).forEach((excerpt) => {
 }
 
 seed().catch((err) => {
-	db.close();q
+	db.close();
 	console.log(`
 
     Error seeding:
