@@ -68,7 +68,7 @@ router.get('/api/madlibs', async ctx => {
       return str
     }
 
-    ctx.body = gameExcerpt(dict)
+    ctx.body = { gameExcerpt: gameExcerpt(dict), wordTypes: gameData.wordType }
   } catch (error) {
     console.log(error)
   }
