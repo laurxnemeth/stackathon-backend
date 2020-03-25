@@ -64,7 +64,6 @@ router.get('/api/madlibs', async ctx => {
             'noun, plural in form but singular in construction',
           ) &&
           !obj[key].includes('prefix') &&
-          !obj[key].includes('geographical name') &&
           !obj[key].includes(
             'noun, plural in form but singular of plural in construction',
           )
