@@ -56,18 +56,32 @@ router.get('/api/madlibs', async ctx => {
     const gameExcerpt = obj => {
       let str = gameData.excerpt
       for (let key in obj) {
-        if (obj[key] !== undefined && !obj[key].includes('pronoun')) {
+        if (
+          obj[key] !== undefined &&
+          !obj[key].includes('pronoun') &&
+          !obj[key].includes('interjection') &&
+          !obj[key].includes(
+            'noun, plural in form but singular in construction',
+          ) &&
+          !obj[key].includes('prefix') &&
+          !obj[key].includes('geographical name') &&
+          !obj[key].includes(
+            'noun, plural in form but singular of plural in construction',
+          )
+        ) {
           if (gameData.wordType.hasOwnProperty(obj[key])) {
             gameData.wordType[dict[key]]++
           } else {
             gameData.wordType[dict[key]] = 1
           }
-          str = str.replace(key, obj[key].toUpperCase())
+          noSpaces = obj[key].replace(' ', '')
+          str = str.replace(key, ` ${noSpaces.toUpperCase()} `)
         }
       }
       return str
     }
 
+    //ctx.body = gameExcerpt(dict)
     ctx.body = { gameExcerpt: gameExcerpt(dict), wordTypes: gameData.wordType }
   } catch (error) {
     console.log(error)
