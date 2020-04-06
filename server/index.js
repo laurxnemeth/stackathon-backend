@@ -60,12 +60,13 @@ router.get('/api/madlibs', async ctx => {
           obj[key] !== undefined &&
           !obj[key].includes('pronoun') &&
           !obj[key].includes('interjection') &&
+          !obj[key].includes('noun, singular or plural in construction') &&
           !obj[key].includes(
             'noun, plural in form but singular in construction',
           ) &&
           !obj[key].includes('prefix') &&
           !obj[key].includes(
-            'noun, plural in form but singular of plural in construction',
+            'noun, plural in form but singular or plural in construction',
           )
         ) {
           if (gameData.wordType.hasOwnProperty(obj[key])) {
@@ -74,7 +75,7 @@ router.get('/api/madlibs', async ctx => {
             gameData.wordType[dict[key]] = 1
           }
           noSpaces = obj[key].replace(' ', '')
-          str = str.replace(key, ` ${noSpaces.toUpperCase()} `)
+          str = str.replace(key, ` {${noSpaces.toUpperCase()}} `)
         }
       }
       return str
